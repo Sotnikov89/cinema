@@ -1,4 +1,3 @@
-<%--@elvariable id="places" type="java.util.Map"--%>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <!doctype html>
@@ -21,34 +20,43 @@
 
     <title>Cinema</title>
     <script>
-        $(document).ready(function(){
-            let places = "${places}";
-            places.forEach((cell,row)=>{
-                var h3 = document.createElement("h3");
-                h3.textContent = "ряд - "+row+", место - "+cell+", "
-                $('#h3').append(h3);
-            })
-        })
+        function validate() {
+            if ($('#name').val() === "" || $('#phone').val() === "" || $('#email').val() === "") {
+                alert("Пожалуйста, введите Ваше имя и номер телефона");
+                return false;
+            }
+        }
     </script>
 </head>
 <body>
 <div class="container">
     <div class="row pt-3">
-        <h3 id="h3">
-            Вы выбрали места:
+        <h3>
+            Вы выбрали:
+            <c:forEach items="${places}" var="place">
+                <c:out value="${place}"/>
+            </c:forEach>
+            <br>
+            Сумма к оплате:
+                <c:out value="${price}"/>
+             рублей.
         </h3>
     </div>
     <div class="row">
-        <form>
+        <form action="http://localhost:8080/cinema/payment" method="post">
             <div class="form-group">
-                <label for="username">ФИО</label>
-                <input type="text" class="form-control" id="username" placeholder="ФИО">
+                <label for="name">Имя</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Имя">
+            </div>
+            <div class="form-group">
+                <label for="email">Почта</label>
+                <input type="text" class="form-control" id="email" name="email"placeholder="Почта">
             </div>
             <div class="form-group">
                 <label for="phone">Номер телефона</label>
-                <input type="text" class="form-control" id="phone" placeholder="Номер телефона">
+                <input type="text" class="form-control" id="phone" name="phone" placeholder="Без кода и пробелов">
             </div>
-            <button type="button" class="btn btn-primary">Оплатить</button>
+            <button type="submit" class="btn btn-primary" onclick="return validate()">Оплатить</button>
         </form>
     </div>
 </div>

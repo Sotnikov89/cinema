@@ -12,7 +12,7 @@ import java.util.List;
 public class DaoTicket implements Dao<Ticket> {
 
     @Override
-    public Ticket get(int id) {
+    public Ticket getById(int id) {
         Ticket ticket = new Ticket();
         String sql = "SELECT * FROM ticket WHERE id=?";
         try (Connection cn = DbConnection.getConnection(); PreparedStatement ps =  cn.prepareStatement(sql)) {
@@ -51,7 +51,7 @@ public class DaoTicket implements Dao<Ticket> {
     }
 
     @Override
-    public void save(Ticket ticket) {
+    public void save(Ticket ticket) throws SQLException {
         String sql = "INSERT INTO ticket(row, cell, account_id) VALUES (?, ?, ?)";
         try (Connection cn = DbConnection.getConnection();
              PreparedStatement ps =  cn.prepareStatement(sql)) {
@@ -59,8 +59,6 @@ public class DaoTicket implements Dao<Ticket> {
             ps.setInt(2, ticket.getCell());
             ps.setInt(3, ticket.getAccount_id());
             ps.execute();
-        } catch (SQLException exception) {
-            exception.printStackTrace();
         }
     }
 

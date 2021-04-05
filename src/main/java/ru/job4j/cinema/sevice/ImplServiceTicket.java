@@ -3,19 +3,24 @@ package ru.job4j.cinema.sevice;
 import ru.job4j.cinema.dao.DaoTicket;
 import ru.job4j.cinema.model.Ticket;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class ImplServiceTicket implements ServiceTicket {
 
     private final DaoTicket daoTicket;
 
-    public ImplServiceTicket() {
+    private ImplServiceTicket() {
         this.daoTicket = new DaoTicket();
     }
 
+    public static ImplServiceTicket instOf() {
+        return new ImplServiceTicket();
+    }
+
     @Override
-    public Ticket get(int id) {
-        return daoTicket.get(id);
+    public Ticket getById(int id) {
+        return daoTicket.getById(id);
     }
 
     @Override
@@ -24,9 +29,7 @@ public class ImplServiceTicket implements ServiceTicket {
     }
 
     @Override
-    public void save(Ticket ticket) {
-        daoTicket.save(ticket);
-    }
+    public void save(Ticket ticket) throws SQLException { daoTicket.save(ticket); }
 
     @Override
     public void update(Ticket ticket) {

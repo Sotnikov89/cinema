@@ -11,7 +11,7 @@ import java.util.List;
 public class DaoAccount implements Dao<Account> {
 
     @Override
-    public Account get(int id) {
+    public Account getById(int id) {
         Account account = new Account();
         String sql = "SELECT * FROM account WHERE id=?";
         try (Connection cn = DbConnection.getConnection(); PreparedStatement ps =  cn.prepareStatement(sql)) {
@@ -50,7 +50,7 @@ public class DaoAccount implements Dao<Account> {
     }
 
     @Override
-    public void save(Account account) {
+    public void save(Account account) throws SQLException {
         String sql = "INSERT INTO account(name, email, phone) VALUES (?, ?, ?)";
         try (Connection cn = DbConnection.getConnection();
              PreparedStatement ps =  cn.prepareStatement(sql)) {
@@ -58,8 +58,6 @@ public class DaoAccount implements Dao<Account> {
             ps.setString(2, account.getEmail());
             ps.setString(3, account.getPhone());
             ps.execute();
-        } catch (SQLException exception) {
-            exception.printStackTrace();
         }
     }
 
@@ -88,5 +86,22 @@ public class DaoAccount implements Dao<Account> {
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
+    }
+
+    public Integer getIdByPhoneOrNull(String phone) {
+        String sql = "SELECT id FROM account WHERE phone = ?";
+        Integer id = null;
+        try (Connection cn = DbConnection.getConnection();
+             PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setString(1, phone);
+            try (ResultSet it = ps.executeQuery()) {
+                while (it.next()) {
+                    id = it.getInt("id");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return id;
     }
 }

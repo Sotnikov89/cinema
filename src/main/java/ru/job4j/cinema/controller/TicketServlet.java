@@ -14,7 +14,7 @@ import java.io.IOException;
 public class TicketServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String string = new ObjectMapper().writeValueAsString(new ImplServiceTicket().getAll());
+        String string = new ObjectMapper().writeValueAsString(ImplServiceTicket.instOf().getAll());
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("json");
         resp.getWriter().write(string);
