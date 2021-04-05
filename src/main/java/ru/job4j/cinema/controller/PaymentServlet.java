@@ -50,9 +50,9 @@ public class PaymentServlet extends HttpServlet {
             for (Ticket ticket : tickets) {
                 ImplServiceTicket.instOf().save(ticket);
             }
-            req.getRequestDispatcher("warning.jsp").forward(req, resp);
-        } catch (SQLException exception) {
             resp.sendRedirect(req.getContextPath()+"/hall");
+        } catch (SQLException exception) {
+            req.getRequestDispatcher("warning.jsp").forward(req, resp);
         }
     }
 }
