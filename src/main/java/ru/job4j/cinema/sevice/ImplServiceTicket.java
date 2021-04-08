@@ -29,7 +29,9 @@ public class ImplServiceTicket implements ServiceTicket {
     }
 
     @Override
-    public void save(Ticket ticket) throws SQLException { daoTicket.save(ticket); }
+    public void save(Ticket ticket) throws SQLException {
+        daoTicket.save(ticket);
+    }
 
     @Override
     public void update(Ticket ticket) {

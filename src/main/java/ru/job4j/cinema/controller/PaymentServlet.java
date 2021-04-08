@@ -23,10 +23,10 @@ public class PaymentServlet extends HttpServlet {
         List<String> places = new ArrayList<>();
         for (String place : rowAndCell) {
             String[] rowCell = place.split("\\.");
-            places.add("ряд "+rowCell[0]+" место "+rowCell[1]+", ");
+            places.add("ряд " + rowCell[0] + " место " + rowCell[1] + ", ");
         }
         req.setAttribute("places", places);
-        req.setAttribute("price", places.size()*500);
+        req.setAttribute("price", places.size() * 500);
 
         req.getSession().setAttribute("sessionPlaces", rowAndCell);
         req.getRequestDispatcher("payment.jsp").forward(req, resp);
@@ -50,7 +50,7 @@ public class PaymentServlet extends HttpServlet {
             for (Ticket ticket : tickets) {
                 ImplServiceTicket.instOf().save(ticket);
             }
-            resp.sendRedirect(req.getContextPath()+"/hall");
+            resp.sendRedirect(req.getContextPath() + "/hall");
         } catch (SQLException exception) {
             req.getRequestDispatcher("warning.jsp").forward(req, resp);
         }

@@ -29,7 +29,9 @@ public class ImplServiceAccount implements ServiceAccount {
     }
 
     @Override
-    public void save(Account account) throws SQLException { daoAccount.save(account); }
+    public void save(Account account) throws SQLException {
+        daoAccount.save(account);
+    }
 
     @Override
     public void update(Account account) {
